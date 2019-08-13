@@ -1,13 +1,81 @@
-server:
-  port: 8080
 spring:
    datasource:
      name: test
      username: root
      password: root123
      driver-class-name: com.mysql.cj.jdbc.Driver
-     jdbcurl: mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  #type-aliases-package: com.entity
+     url: mysql://127.0.0.1:3306/test?characterEncoding=UTF-8&serverTimezone=UTC
+   #生效热部署
+   devtools:
+    livereload:
+      enabled: true
+   #设置重启的目录，添加那个目录的文件需要restart
+   restart:
+     additional-paths: src/main/java
+
+   mybatis:
+     mapper-locations: classpath:mapper/*.xml
+   #type-aliases-package: com.entity
+
+   #############################################################
+   #
+   #freemarker 静态资源配置
+   #
+   #############################################################
+   freemarker:
+     #设定ftl文件路径
+     template-loader-path: classpath:/templates
+     #是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
+     cache: false
+     charset: UTF-8
+     #检查模板路径是否存在
+     check-template-location: true
+     #encoding&content-type：请求和响应中的媒体类型信息。告诉服务端如何处理请求的数据，以及告诉客户端（一般是浏览器）如何解析响应的数据。
+     content-type: text/html
+     #设定所有request的属性在merge到模板的时候，是否要都添加到model中.
+     expose-request-attributes: true
+     #设定所有HttpSession的属性在merge到模板的时候，是否要都添加到model中.
+     expose-session-attributes: true
+     #指定RequestContext属性的名.
+     request-context-attribute: request
+     #suffix: ftl
+
+   #############################################################
+   #
+   #thymeleaf静态资源配置
+   #
+   #############################################################
+   thymeleaf:
+     #关闭缓存及时刷新
+     cache: false
+     prefix: classpath:/templates/
+     suffix: .html
+     mode: HTML5
+     encoding: UTF-8
+     servlet:
+       content-type: text/html
+#############################################################
+#
+#Server 服务相关配置
+#
+#############################################################
+#配置api端口号
+server:
+  #port: 8080
+#session最大超时时间（分钟），默认为30分钟
+  #servlet:
+    #session:
+      #timeout: 60m
+  #该服务绑定IP地址，启动服务器时如本机不是该IP地址则抛出异常启动失败
+  #只有特殊需求的情况下才需要配置，具体根据各自的业务来源设置
+  #address: 192.168.1.7
+
+  tomcat:
+    #tomcat最大线程数，默认为200
+    max-threads: 200
+    #tomcat的URL编码
+    uri-encoding: utf-8
+    #存放Tomcat的日志，Dump等文件的临时文件夹，默认为C:\Users\Default\AppData\Local\Temp
+    basedir: E:/A-ZYM-Work-1/A-WorkTemp/springbootdemo_1/Temp
+
 
